@@ -1,0 +1,79 @@
+.header-h1 {
+    text-align: center;
+}
+
+.header {
+    background: linear-gradient(#e66465, #9198e5);
+    padding: 2rem;
+}
+
+.nav-links {
+    display: flex;
+    justify-content: center;
+}
+
+.link-game, .link-gallery {
+    margin: 1rem;
+    text-decoration: none;
+    color: black;
+    padding-top: 0.1rem;
+    padding-bottom: 0.1rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    background-color: lavender;
+    border-radius: 2rem;
+}
+
+.main {
+    background: linear-gradient(#9198e5, #00d4ff);
+    max-width: 100vw;
+    height: 100vh;
+    padding-top: 2rem;
+    text-align: center;
+}
+
+.welcomeText-h3 {
+    text-align: center;
+    margin: 0.5rem;
+}
+
+.explainText-h3 {
+    text-align: center;
+    margin: 0.5rem;
+}
+
+.main-h2 {
+    text-align: center;
+    margin: 0.5rem;
+}
+
+.cuteSection {
+    display: flex;
+    justify-content: center;
+}
+
+.getCuteBtn {
+    border-radius: 1rem;
+}
+
+.hamster-card {
+    display: flex;
+    justify-content: center;
+    margin: 2rem;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    background-color: lightpink;
+    border-radius: 2rem;
+    max-width: 40vw;
+}
+
+.card-text {
+    margin: 1rem;
+}
+
+.card-img {
+    height: auto; 
+    width: auto; 
+    max-width: 300px; 
+    max-height: 300px;
+}
