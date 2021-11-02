@@ -5,11 +5,10 @@ import './HomePage.css';
 type Hamster = any
 
 const HomePage = () => {
-    const baseUrl = 'http://localhost:1337';
     const [hamsters, setHamsters] = useState<Hamster[] | null>(null)
 
     const getCutest = async () => {
-        const response = await fetch(baseUrl + '/hamsters/cutest');
+        const response = await fetch('/hamsters/cutest');
         const data = await response.json();
         let randomCutest = [data[Math.floor(Math.random() * data.length)]];
         setHamsters(randomCutest)
@@ -33,13 +32,13 @@ const HomePage = () => {
                     <button className="getCuteBtn" onClick={getCutest}>Se vinnaren</button>
                 </section>
                 {hamsters
-                    ? hamsters.map(obj => (
-                        <section className="hamster-card">
-                            <img src={baseUrl + 'images/' + obj.imgName} alt="hamster" className="card-img"></img>
+                    ? hamsters.map(object => (
+                        <section className="hamster-card" key={object.id}>
+                            <img src={'/images/' + object.imgName} alt="hamster" className="card-img"></img>
                             <article className="card-text">
-                                <p className="card-name">{"Namn: " + obj.name}</p>
-                                <p className="card-age">{"Ålder: " + obj.age + " år"}</p>
-                                <p className="card-favFood">{"Favoritmat: " + obj.favFood}</p>
+                                <p className="card-name">{"Namn: " + object.name}</p>
+                                <p className="card-age">{"Ålder: " + object.age + " år"}</p>
+                                <p className="card-favFood">{"Favoritmat: " + object.favFood}</p>
                             </article>
                         </section>
                     ))
