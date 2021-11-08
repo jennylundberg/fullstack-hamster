@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import './GalleryPage.css';
+import AddForm from "../components/AddForm";
 
 type Hamster = any
 
@@ -16,8 +17,25 @@ const GalleryPage = () => {
         setAllHamsters(data)
     }
 
+    const deleteOneHamster = async (hamster: string) => {
+        await fetch('/hamsters/' + hamster, {
+            method: 'DELETE',
+            headers: {
+                'content-type': 'application/json; charset=UTF-8'
+            }
+        })
+        getAll()
+    }
+
+    const [show, setShow] = useState(false)
+
+    const handleClick = (hamster: string) => { 
+        setShow(true)
+    }
+
     return (
         <div>
+            
             <header className="header">
                 <h1 className="header-h1">Hamster Wars !</h1>
                 <nav className="nav-links">
@@ -29,6 +47,7 @@ const GalleryPage = () => {
             <main className="mainSec">
                 <h3 className="welcomeText-h3">Välkommen till galleriet över alla hamstrar.</h3>
                 <h3 className="explainText-h3">Här ser du alla hamstrar som finns med i spelet, du kan välja att ta bort en hamster eller lägga till en ny.</h3>
+                <AddForm />
                 <section className="allHamsterCards">
                     {allHamsters
                         ? allHamsters.map(object => (
@@ -36,9 +55,13 @@ const GalleryPage = () => {
                                 <img src={baseUrl + '/images/' + object.imgName} alt="hamster" className="card-imgs"></img>
                                 <article className="card-texts">
                                     <p className="card-name">{"Namn: " + object.name}</p>
-                                    <p className="card-age">{"Ålder: " + object.age + " år"}</p>
-                                    <p className="card-favFood">{"Favoritmat: " + object.favFood}</p>
+                                    <aside className={show ? 'card-aside' : 'hide'}>
+                                        <p className="card-age">{"Ålder: " + object.age + " år"}</p>
+                                        <p className="card-favFood">{"Favoritmat: " + object.favFood}</p>
+                                    </aside>
+                                    <button onClick={() => handleClick(object.id)}>Mer info</button>
                                 </article>
+                                <button onClick={() => deleteOneHamster(object.id)}>🗑</button >
                             </section>
                         ))
                         : 'Loading...'}

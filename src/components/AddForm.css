@@ -1,0 +1,30 @@
+.addSection {
+    display: flex;
+    justify-content: center;
+    margin: 0.5rem;
+}
+
+.addArticle {
+    display: flex;
+    flex-direction: column;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    background-color: lightpink;
+    border-radius: 2rem;
+    width: 35vw;
+    margin: 1rem;
+}
+
+.addButton {
+    margin-top: 1rem;
+    margin-left: 5rem;
+    margin-right: 5rem;
+}
+
+.valid {
+    border-color: greenyellow;
+}
+
+.invalid {
+    border-color: red;
+}

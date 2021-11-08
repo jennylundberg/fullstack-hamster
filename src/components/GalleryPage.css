@@ -80,3 +80,7 @@
     max-height: 13vh;
     padding: 0.5rem;
 }
+
+.hide {
+    display: none;
+}

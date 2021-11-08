@@ -9,6 +9,8 @@ const GamePage = () => {
 
     const [hamster1, setHamster1] = useState<Hamster[] | null>(null)
     const [hamster2, setHamster2] = useState<Hamster[] | null>(null)
+    
+    const [show, setShow] = useState(false)
 
     const getHamsters = async () => {
         const response = await fetch(baseUrl + '/hamsters');
@@ -27,8 +29,42 @@ const GamePage = () => {
     }
 
     const handleGame = (win: any, lose: any, chosen: number) => {
-        
+        win[0].wins++
+        win[0].games++
+        lose[0].defeats++
+        lose[0].games++
 
+        if (chosen === 1) {
+            setHamster1([win[0]])
+            setHamster2([lose[0]])
+        } else {
+            setHamster1([lose[0]])
+            setHamster2([win[0]])
+        }
+
+        setShow(true)
+
+        fetch('/hamsters/' + lose[0].id, {
+            method: 'PUT',
+            headers: {
+                'content-type': 'application/json; charset=UTF-8'
+            },
+            body: JSON.stringify({
+                games: lose[0].games,
+                defeats: lose[0].defeats
+            })
+        })
+
+        fetch('/hamsters/' + win[0].id, {
+            method: 'PUT',
+            headers: {
+                'content-type': 'application/json; charset=UTF-8'
+            },
+            body: JSON.stringify({
+                games: win[0].games,
+                wins: win[0].wins
+            })
+        })
     }
 
     return (
@@ -53,28 +89,32 @@ const GamePage = () => {
                                 <img src={'/images/' + object.imgName} alt="hamster" className="card-img"></img>
                                 <article className="card-text">
                                     <p className="card-name">{"Namn: " + object.name}</p>
-                                    <p className="card-wins">{"Vinster: " + object.wins}</p>
-                                    <p className="card-deafeats">{"Förluster: " + object.defeats}</p>
-                                    <p className="card-games">{"Matcher: " + object.games}</p>
+                                    <aside className={show ? 'card-aside' : 'hide'}>
+                                        <p className="card-wins">{"Vinster: " + object.wins}</p>
+                                        <p className="card-deafeats">{"Förluster: " + object.defeats}</p>
+                                        <p className="card-games">{"Matcher: " + object.games}</p>
+                                    </aside>
                                     <button onClick={() => handleGame(hamster1, hamster2, 1)}>Rösta</button>
                                 </article>
                             </section>
                         ))
-                        : 'Loading...'}
+                        : ''}
                     {hamster2
                         ? hamster2.map(object => (
                             <section className="hamster-card" key={object.id}>
                                 <img src={'/images/' + object.imgName} alt="hamster" className="card-img"></img>
                                 <article className="card-text">
                                     <p className="card-name">{"Namn: " + object.name}</p>
-                                    <p className="card-wins">{"Vinster: " + object.wins}</p>
-                                    <p className="card-deafeats">{"Förluster: " + object.defeats}</p>
-                                    <p className="card-games">{"Matcher: " + object.games}</p>
+                                    <aside className={show ? 'card-aside' : 'hide'}>
+                                        <p className="card-wins">{"Vinster: " + object.wins}</p>
+                                        <p className="card-deafeats">{"Förluster: " + object.defeats}</p>
+                                        <p className="card-games">{"Matcher: " + object.games}</p>
+                                    </aside>
                                     <button onClick={() => handleGame(hamster2, hamster1, 2)}>Rösta</button>
                                 </article>
                             </section>
                         ))
-                        : 'Loading...'}
+                        : ''}
                 </section>
             </main>
         </div>
