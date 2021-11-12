@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { setTimeout } from 'timers'
 import "./AddForm.css"
 
 type Props = {
@@ -36,7 +37,9 @@ const AddForm = (props: Props) => {
             })
         })
         
-        props.click()
+        setTimeout(() => {
+            props.click()
+        }, 1000);
     }
 
     return (
