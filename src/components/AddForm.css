@@ -15,6 +15,11 @@
     margin: 1rem;
 }
 
+.addArticle * {
+    margin-left: 1rem;
+    margin-right: 1rem;
+}
+
 .addButton {
     margin-top: 1rem;
     margin-left: 5rem;
@@ -28,3 +33,4 @@
 .invalid {
     border-color: red;
 }
+

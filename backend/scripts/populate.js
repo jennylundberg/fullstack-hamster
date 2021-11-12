@@ -7,6 +7,7 @@ const data = require('../assets/data.json')
 
 
 
+
 populate();
 
 async function populate() {
