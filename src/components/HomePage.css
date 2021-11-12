@@ -77,3 +77,16 @@
     max-width: 300px; 
     max-height: 300px;
 }
+
+.winnerHamster {
+    display: flex;
+    justify-content: center;
+}
+
+.validE {
+    display: none;
+}
+
+.invalidE {
+    display: inline-block;
+}

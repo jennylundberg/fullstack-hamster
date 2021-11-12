@@ -1,19 +1,21 @@
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import './GamePage.css';
-
-type Hamster = any
+import Hamster from "../modules/hamsterInterface"
 
 const GamePage = () => {
-    const baseUrl = 'http://localhost:1337';
 
     const [hamster1, setHamster1] = useState<Hamster[] | null>(null)
     const [hamster2, setHamster2] = useState<Hamster[] | null>(null)
     
     const [show, setShow] = useState(false)
 
+    useEffect(() => {
+        getHamsters()
+    }, [])
+
     const getHamsters = async () => {
-        const response = await fetch(baseUrl + '/hamsters');
+        const response = await fetch('/hamsters');
         const data = await response.json();
 
         // slumpar första hamstern och tar bort ifrån listan för att undvika att det blir en dubblett som kör ett game
@@ -26,6 +28,8 @@ const GamePage = () => {
 
         setHamster1(randomHamster1)
         setHamster2(randomHamster2)
+
+        setShow(false)
     }
 
     const handleGame = (win: any, lose: any, chosen: number) => {
@@ -79,9 +83,6 @@ const GamePage = () => {
             </header>
             <main className="mainSect">
                 <h2>Welcome to the battlefield!</h2>
-                <section className="RandomSection">
-                    <button className="getRandomBtn" onClick={getHamsters}>Starta spel</button>
-                </section>
                 <section className="battleHamsters">
                     {hamster1
                         ? hamster1.map(object => (
@@ -94,7 +95,7 @@ const GamePage = () => {
                                         <p className="card-deafeats">{"Förluster: " + object.defeats}</p>
                                         <p className="card-games">{"Matcher: " + object.games}</p>
                                     </aside>
-                                    <button onClick={() => handleGame(hamster1, hamster2, 1)}>Rösta</button>
+                                    <button className={show ? 'hide' : undefined} onClick={() => handleGame(hamster1, hamster2, 1)}>Rösta</button>
                                 </article>
                             </section>
                         ))
@@ -110,11 +111,14 @@ const GamePage = () => {
                                         <p className="card-deafeats">{"Förluster: " + object.defeats}</p>
                                         <p className="card-games">{"Matcher: " + object.games}</p>
                                     </aside>
-                                    <button onClick={() => handleGame(hamster2, hamster1, 2)}>Rösta</button>
+                                    <button className={show ? 'hide' : undefined} onClick={() => handleGame(hamster2, hamster1, 2)}>Rösta</button>
                                 </article>
                             </section>
                         ))
                         : ''}
+                </section>
+                <section>
+                    <button className={show ? undefined : 'hide'} onClick={() => getHamsters()}>Nästa spel</button>
                 </section>
             </main>
         </div>
